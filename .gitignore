@@ -4,8 +4,10 @@
 [Bb]uild/
 [Bb]uilds/
 Assets/AssetStoreTools*
-Assets/Plugins/RAM2019/River Auto Material/URP 7.2  Unity 2019.3 River Auto Material 2019.unitypackage
-Assets/Plugins/RAM2019/River Auto Material/URP 7.18  Unity 2019.3 River Auto Material 2019.unitypackage
+Assets/Plugins/RAM2019/
+Assets/Plugins/RAM2019.meta
+Assets/Atlas/heliu/
+Assets/Atlas/heliu.meta
 Assets/Atlas/heliu_01/LightingData.asset
 Assets/Scenes/heliu_02/LightingData.asset
 
