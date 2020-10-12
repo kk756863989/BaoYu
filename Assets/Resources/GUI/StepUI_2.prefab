@@ -5942,7 +5942,7 @@ MonoBehaviour:
   HeaderTip: 
   startBtn: {fileID: 8939554753149001895}
   step2Btn: {fileID: 6854998711498792547}
-  InfoWindowAnim: {fileID: 5588464702835287708}
+  InfoWindow: {fileID: 327174751624745056}
   QAMoudle: {fileID: 5845104555783809107}
   step2: {fileID: 3965259606335007393}
 --- !u!1 &7833757904752889705

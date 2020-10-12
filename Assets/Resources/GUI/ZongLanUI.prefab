@@ -5986,6 +5986,7 @@ MonoBehaviour:
   enterType: 5
   exitType: 0
   onBack: 0
+  HeaderTip: 
   LeftBtns:
   - {fileID: 108883923399989465}
   - {fileID: 2465413227280164332}

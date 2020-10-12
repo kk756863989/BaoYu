@@ -49,16 +49,16 @@ public class YLZ_Set : MonoBehaviour, IPointerDownHandler
         obj.transform.position = target;
         obj.transform.SetParent(waypointP);
         obj.SetActive(false);
-        MainManager.GetInstance().WayPointList.Add(obj);
+        //MainManager.GetInstance().WayPointList.Add(obj);
     }
 
     public void RemoveYLZ(GameObject ylz)
     {
         MsgSystem.Dispatch("removeYLZ", ylz);
         int index = MainManager.GetInstance().YlzList.IndexOf(ylz);
-        Destroy(MainManager.GetInstance().WayPointList[index]);
+        //Destroy(MainManager.GetInstance().WayPointList[index]);
         MainManager.GetInstance().YlzList.RemoveAt(index);
-        MainManager.GetInstance().WayPointList.RemoveAt(index);
+        //MainManager.GetInstance().WayPointList.RemoveAt(index);
         Line line;
         for (int i = 0; i < DrawLine.ylzlinelist.Count; i++)
         {
