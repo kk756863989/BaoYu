@@ -15,6 +15,11 @@ public class MainManager : MonoBehaviour
     public List<GameObject> WayPointList = new List<GameObject>();//场景中的雨量站路标
     public int caozuoIndex;
 
+    public bool Step1ok = false;
+
+    public string NowStepName;//当前步骤UI名称
+    public bool isInStep = false;//是否在步骤中
+
     void Start()
     {
         instance = this;

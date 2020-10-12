@@ -20,7 +20,7 @@ public class StepUI_1 : CCGui
         return instance;
     }
     public Button startBtn, step2Btn, step5Btn;
-    public Animation InfoWindowAnim;
+    public GameObject InfoWindow;
     bool infowindowOpen = true;
     public GameObject QAMoudle;
     public GameObject step2, step3, step4, step5;
@@ -33,9 +33,7 @@ public class StepUI_1 : CCGui
         instance = this;
 
 
-        InfoWindowAnim.gameObject.SetActive(true);
-        MainUI.GetInstance().InfoBtn.gameObject.SetActive(true);
-        MsgSystem.Add("showInfoWindow", showInfoWindow);
+        InfoWindow.SetActive(true);
         FindComponent();
     }
 
@@ -46,22 +44,17 @@ public class StepUI_1 : CCGui
         step5Btn.onClick.AddListener(step5Btn_Click);
     }
 
-    private void showInfoWindow(object[] arg)
+    public void showInfoWindow()
     {
         if (infowindowOpen)
         {
-            //InfoWindowAnim["InfoWindowAnim"].speed = 1f;
-            //InfoWindowAnim.Play("InfoWindowAnim");
             infowindowOpen = false;
-            InfoWindowAnim.gameObject.SetActive(false);
+            InfoWindow.SetActive(false);
         }
         else
         {
-            //InfoWindowAnim["InfoWindowAnim"].time = InfoWindowAnim["InfoWindowAnim"].clip.length;
-            //InfoWindowAnim["InfoWindowAnim"].speed = -1f;
-            //InfoWindowAnim.Play("InfoWindowAnim");
             infowindowOpen = true;
-            InfoWindowAnim.gameObject.SetActive(true);
+            InfoWindow.SetActive(true);
         }
     }
 
@@ -96,10 +89,10 @@ public class StepUI_1 : CCGui
     void startBtn_Click()
     {
         startBtn.gameObject.SetActive(false);
+        InfoWindow.SetActive(false);
+        infowindowOpen = false;
         QAMoudle.SetActive(true);
-        MsgSystem.Dispatch("showInfoWindow");
     }
-
 
     void step2Btn_Click()
     {
@@ -109,6 +102,7 @@ public class StepUI_1 : CCGui
     void step5Btn_Click()
     {
         GameObject.Find("Scene").transform.Find("YuLiangZhan").gameObject.SetActive(true);
+        MainManager.GetInstance().Step1ok = true;
     }
 
     public bool DrawTriangleRight()
@@ -289,10 +283,8 @@ public class StepUI_1 : CCGui
         return (float)Math.Sqrt(Math.Pow((A.x - B.x), 2) + Math.Pow((A.y - B.y), 2));
     }
 
-
     public override void Close(params object[] args)
     {
-        MsgSystem.Remove("showInfoWindow", showInfoWindow);
         base.Close(args);
     }
 }

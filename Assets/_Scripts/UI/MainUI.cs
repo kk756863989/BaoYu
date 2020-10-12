@@ -17,7 +17,7 @@ public class MainUI : CCGui
     bool isUP = false;
     Animation animation;
     Button TopBtn1, TopBtn2, TopBtn3, TopBtn4, ExitBtn;
-    GameObject ZongLan, JiLu, KaoHe, ExitWindow, VerticalBtns;
+    GameObject ZongLan, JiLu, KaoHe, ExitWindow, VerticalBtns, CaoZuo, ChangeStepMask;
     GameObject ActiveObj;
     [SerializeField]
     public int VerticalBtn_Index;
@@ -54,16 +54,17 @@ public class MainUI : CCGui
 
     void FindComponent()
     {
-        TopBtn1 = transform.Find("Top/Buttons/Btn1").GetComponent<Button>();
-        TopBtn2 = transform.Find("Top/Buttons/Btn2").GetComponent<Button>();
-        TopBtn3 = transform.Find("Top/Buttons/Btn3").GetComponent<Button>();
-        TopBtn4 = transform.Find("Top/Buttons/Btn4").GetComponent<Button>();
-        ExitBtn = transform.Find("Top/Buttons/ExitBtn").GetComponent<Button>();
+        ChangeStepMask = transform.Find("Main/ChangeStepMask").gameObject;
+        TopBtn1 = transform.Find("Main/Top/Buttons/Btn1").GetComponent<Button>();
+        TopBtn2 = transform.Find("Main/Top/Buttons/Btn2").GetComponent<Button>();
+        TopBtn3 = transform.Find("Main/Top/Buttons/Btn3").GetComponent<Button>();
+        TopBtn4 = transform.Find("Main/Top/Buttons/Btn4").GetComponent<Button>();
+        ExitBtn = transform.Find("Main/Top/Buttons/ExitBtn").GetComponent<Button>();
 
-        InfoBtn.onClick.AddListener(() =>
-        {
-            MsgSystem.Dispatch("showInfoWindow");
-        });
+        //InfoBtn.onClick.AddListener(() =>
+        //{
+        //    MsgSystem.Dispatch("showInfoWindow");
+        //});
         ylzSetBtn.onClick.AddListener(() =>
         {
             canYLZ = !canYLZ;
@@ -125,7 +126,7 @@ public class MainUI : CCGui
 
         #region  TopBtn事件
 
-        VerticalBtns = transform.Find("ZongLan/VerticalBtns").gameObject;
+        VerticalBtns = transform.Find("Main/ZongLan/VerticalBtns").gameObject;
 
         foreach (Transform item in VerticalBtns.transform)
         {
@@ -136,27 +137,25 @@ public class MainUI : CCGui
             });
         }
 
-        ZongLan = transform.Find("ZongLan").gameObject;
-        JiLu = transform.Find("JiLu").gameObject;
-        KaoHe = transform.Find("KaoHe").gameObject;
-        ExitWindow = transform.Find("ExitWindow").gameObject;
+        ZongLan = transform.Find("Main/ZongLan").gameObject;
+        CaoZuo = transform.Find("Main/CaoZuo").gameObject;
+        JiLu = transform.Find("Main/JiLu").gameObject;
+        KaoHe = transform.Find("Main/KaoHe").gameObject;
+        ExitWindow = transform.Find("Main/ExitWindow").gameObject;
 
         TopBtn1.onClick.AddListener(() => {
-            ChangeActiveObj(ZongLan);
-            GuiSystem.Close("CaoZuo_UI");
+            topBtn_Click(ZongLan, 1);
         });
         TopBtn2.onClick.AddListener(() => {
-            ChangeActiveObj();
-            GuiSystem.Open("CaoZuo_UI");
+            topBtn_Click(CaoZuo, 0);
         });
         TopBtn3.onClick.AddListener(() => {
-            ChangeActiveObj(JiLu);
-            GuiSystem.Close("CaoZuo_UI");
+            topBtn_Click(JiLu, 0);
         });
         TopBtn4.onClick.AddListener(() => {
-            ChangeActiveObj(KaoHe);
-            GuiSystem.Close("CaoZuo_UI");
+            topBtn_Click(KaoHe, 0);
         });
+
         ExitBtn.onClick.AddListener(() =>
         {
             SiblingIndex = transform.GetSiblingIndex();
@@ -164,6 +163,13 @@ public class MainUI : CCGui
             ExitWindow.SetActive(true);
         });
         #endregion
+    }
+
+    void topBtn_Click(GameObject obj,int x)
+    {
+        if (StepChange()) return;
+        ChangeActiveObj(obj);
+        TopBtnMove(x);
 
     }
 
@@ -260,6 +266,36 @@ public class MainUI : CCGui
                 break;
         }
 
+    }
+
+    public bool StepChange()
+    {
+        if (MainManager.GetInstance().isInStep)//如果当前在步骤操作中
+        {
+            ChangeStepMask.SetActive(true);
+            return true;
+        }
+        return false;
+    }
+
+    public void StepChangeEnd(int x)
+    {
+        ChangeStepMask.SetActive(false);
+        if (x == 1)
+        {
+            Map.SetActive(false);
+            MainManager.GetInstance().isInStep = false;
+            GuiSystem.Close(MainManager.GetInstance().NowStepName);
+            MainManager.GetInstance().NowStepName = null;
+            if (MainManager.GetInstance().caozuoIndex == 0)
+            {
+                if (MainManager.GetInstance().Step1ok) return;
+
+                undertoolBtns[0].gameObject.SetActive(false);
+                undertoolBtns[1].gameObject.SetActive(false);
+            }
+
+        }
     }
 
     /// <summary>

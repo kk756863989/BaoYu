@@ -10,7 +10,7 @@ public class StepUI_2 : CCGui
         return instance;
     }
     public Button startBtn, step2Btn;
-    public Animation InfoWindowAnim;
+    public GameObject InfoWindow;
     bool infowindowOpen = true;
     public GameObject QAMoudle;
     public GameObject step2;
@@ -20,9 +20,7 @@ public class StepUI_2 : CCGui
         instance = this;
 
 
-        InfoWindowAnim.gameObject.SetActive(true);
-        MainUI.GetInstance().InfoBtn.gameObject.SetActive(true);
-        MsgSystem.Add("showInfoWindow", showInfoWindow);
+        InfoWindow.SetActive(true);
         FindComponent();
     }
 
@@ -32,17 +30,17 @@ public class StepUI_2 : CCGui
         step2Btn.onClick.AddListener(step2Btn_Click);
     }
 
-    private void showInfoWindow(object[] arg)
+    private void showInfoWindow()
     {
         if (infowindowOpen)
         {
             infowindowOpen = false;
-            InfoWindowAnim.gameObject.SetActive(false);
+            InfoWindow.SetActive(false);
         }
         else
         {
             infowindowOpen = true;
-            InfoWindowAnim.gameObject.SetActive(true);
+            InfoWindow.SetActive(true);
         }
     }
 
@@ -60,8 +58,9 @@ public class StepUI_2 : CCGui
     void startBtn_Click()
     {
         startBtn.gameObject.SetActive(false);
+        InfoWindow.SetActive(false);
+        infowindowOpen = false;
         QAMoudle.SetActive(true);
-        MsgSystem.Dispatch("showInfoWindow");
     }
 
     void step2Btn_Click()
@@ -71,7 +70,6 @@ public class StepUI_2 : CCGui
 
     public override void Close(params object[] args)
     {
-        MsgSystem.Remove("showInfoWindow", showInfoWindow);
         base.Close(args);
     }
 }
