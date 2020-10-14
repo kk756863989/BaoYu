@@ -9,7 +9,7 @@ public class StepUI_2 : CCGui
     {
         return instance;
     }
-    public Button startBtn, step2Btn;
+    public Button startBtn, step2Btn, InfoBtn;
     public GameObject InfoWindow;
     bool infowindowOpen = true;
     public GameObject QAMoudle;
@@ -28,6 +28,7 @@ public class StepUI_2 : CCGui
     {
         startBtn.onClick.AddListener(startBtn_Click);
         step2Btn.onClick.AddListener(step2Btn_Click);
+        InfoBtn.onClick.AddListener(showInfoWindow);
     }
 
     private void showInfoWindow()
