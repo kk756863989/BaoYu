@@ -41,7 +41,7 @@ public class ZongLanUI : CCGui
                 else
                 {
                     CameraManager.ChangeCamera(Cameras.SceneCamera, false);
-                    MainUI.GetInstance().SetBackImage(true, 0.7f);
+                    MainUI.GetInstance().SetBackImage(true);
                     MainUI.GetInstance().TopBtnMove(1);
                 }
                 ResetContent(item);

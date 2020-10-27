@@ -19,7 +19,7 @@ public class StepUI_1 : CCGui
     {
         return instance;
     }
-    public Button startBtn, step2Btn, step5Btn;
+    public Button startBtn, step2Btn, step5Btn, InfoBtn;
     public GameObject InfoWindow;
     bool infowindowOpen = true;
     public GameObject QAMoudle;
@@ -42,9 +42,10 @@ public class StepUI_1 : CCGui
         startBtn.onClick.AddListener(startBtn_Click);
         step2Btn.onClick.AddListener(step2Btn_Click);
         step5Btn.onClick.AddListener(step5Btn_Click);
+        InfoBtn.onClick.AddListener(showInfoWindow);
     }
 
-    public void showInfoWindow()
+    void showInfoWindow()
     {
         if (infowindowOpen)
         {
@@ -101,8 +102,9 @@ public class StepUI_1 : CCGui
 
     void step5Btn_Click()
     {
-        GameObject.Find("Scene").transform.Find("YuLiangZhan").gameObject.SetActive(true);
-        MainManager.GetInstance().Step1ok = true;
+        GameObject.Find("Scene/YLZs").transform.Find("YuLiangZhan").gameObject.SetActive(true);
+
+        StepEnd();
     }
 
     public bool DrawTriangleRight()
@@ -150,13 +152,6 @@ public class StepUI_1 : CCGui
                 }
                 else if (linelist[j].points.Contains(p2))
                 {
-                    //if (linelist[j].YLZS.Contains(ylz2))
-                    //{
-                    //    if (linelist[j].YLZS.IndexOf(ylz2) == 0)
-                    //        ylz3 = linelist[j].YLZS[1];
-                    //    else
-                    //        ylz3 = linelist[j].YLZS[0];
-                    //}
                     if (linelist[j].points.IndexOf(p2) == 0)
                         p3 = linelist[j].points[1];
                     else
@@ -281,6 +276,13 @@ public class StepUI_1 : CCGui
     private float GetDistance(Vector2 A, Vector2 B)
     {
         return (float)Math.Sqrt(Math.Pow((A.x - B.x), 2) + Math.Pow((A.y - B.y), 2));
+    }
+
+    private void StepEnd()
+    {
+        transform.Find("END").gameObject.SetActive(true);
+        MainManager.GetInstance().Step1ok = true;
+
     }
 
     public override void Close(params object[] args)

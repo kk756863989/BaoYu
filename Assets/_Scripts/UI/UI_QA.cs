@@ -13,12 +13,11 @@ public class Q_A
 
 public class UI_QA : MonoBehaviour {
     public Text Qstr, Astr1, Astr2, Astr3, Astr4;
-    public Transform ToggleGroup;
     public Button SubmitBtn;
     bool hasAnswer = false, QAfinish = false;
     public int all_QACount = 5, need_QACount = 3, has_QACount = 0;
-    int AnswerIndex;
-    Toggle tempToggle;
+    int AnswerIndex;//正确答案
+    int AnswerNum;//已选答案
     public GameObject step1;
 
     public void Start()
@@ -34,17 +33,7 @@ public class UI_QA : MonoBehaviour {
             Skip();
             return;
         }
-        int AnswerNum = 99;
-        for (int i = 0; i < ToggleGroup.childCount; i++)
-        {
-            if (ToggleGroup.GetChild(i).GetComponent<Toggle>().isOn == true)
-            {
-                tempToggle = ToggleGroup.GetChild(i).GetComponent<Toggle>();
-                hasAnswer = true;
-                AnswerNum = i;
-                break;
-            }
-        }
+
         if (!hasAnswer)  return;
 
         has_QACount++;
@@ -64,8 +53,6 @@ public class UI_QA : MonoBehaviour {
 
     void ShowQuestion()
     {
-        if (tempToggle != null)
-            tempToggle.isOn = false;
         int RangeNum = (int)Random.Range(1, all_QACount + 1);
         if (MainManager.GetInstance().QAList.Contains(RangeNum))
         {
@@ -76,6 +63,12 @@ public class UI_QA : MonoBehaviour {
 
         hasAnswer = false;
         LoadQAJson(RangeNum);
+    }
+
+    public void ChoiceAnswer(int answerIndex)
+    {
+        AnswerNum = answerIndex;
+        hasAnswer = true;
     }
 
     public void Skip()
@@ -97,5 +90,6 @@ public class UI_QA : MonoBehaviour {
         Astr3.text = QAJson.GetValue("astr3").ToObject<string>();
         Astr4.text = QAJson.GetValue("astr4").ToObject<string>();
         AnswerIndex = QAJson.GetValue("answer").ToObject<int>();
+
     }
 }

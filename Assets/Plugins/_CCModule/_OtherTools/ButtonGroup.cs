@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public class ButtonGroup : MonoBehaviour
 {
@@ -13,6 +14,15 @@ public class ButtonGroup : MonoBehaviour
             if (IgnoreBtn.Contains(item.gameObject)) continue;
             if (!item.GetComponent<Button>()) continue;
             btnList.Add(item.gameObject);
+
+
+            //EventTrigger.Entry en1 = new EventTrigger.Entry();
+            //en1.eventID = EventTriggerType.PointerDown;
+            //EventTrigger eventTrigger = item.GetComponent<EventTrigger>();
+            //en1.callback = new EventTrigger.TriggerEvent();
+            //en1.callback.AddListener((BaseEventData pointData) => { Click(item.gameObject); });
+
+
             item.GetComponent<Button>().onClick.AddListener(() =>
             {
                 Click(item.gameObject);
@@ -22,8 +32,6 @@ public class ButtonGroup : MonoBehaviour
 
     void Click( GameObject obj)
     {
-        obj.GetComponent<Animator>().SetBool("isPressed",true);
-        obj.GetComponent<Button>().interactable = false;
         foreach (var btn in btnList)
         {
             if (obj == btn) continue;
@@ -32,5 +40,8 @@ public class ButtonGroup : MonoBehaviour
             btn.GetComponent<Button>().interactable = true;
 
         }
+        obj.GetComponent<Animator>().SetBool("isPressed",true);
+        obj.GetComponent<Button>().interactable = false;
+       
     }
 }

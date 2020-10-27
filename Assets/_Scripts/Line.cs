@@ -16,12 +16,10 @@ public class Line : MonoBehaviour
 
     private void Remove(object[] arg)
     {
-        Debug.Log("removeLine");
         GameObject ylz = arg[0] as GameObject;
         if (YLZS.Contains(ylz))
         {
-            Debug.Log(gameObject.name);
-            MsgSystem.Remove("removeYLZ", Remove);
+            Remove();
             DrawLine.ylzlinelist.Remove(this);
 
             List<Triangle> trianglelist = StepUI_1.GetInstance().triangleList;

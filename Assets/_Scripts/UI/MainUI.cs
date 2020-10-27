@@ -16,15 +16,16 @@ public class MainUI : CCGui
     int SiblingIndex;
     bool isUP = false;
     Animation animation;
-    Button TopBtn1, TopBtn2, TopBtn3, TopBtn4, ExitBtn;
+    Button TopBtn1, TopBtn2, TopBtn3, TopBtn4, ExitBtn, MenuBtn;
     GameObject ZongLan, JiLu, KaoHe, ExitWindow, VerticalBtns, CaoZuo, ChangeStepMask;
     GameObject ActiveObj;
+    public GameObject LY_Image;
     [SerializeField]
     public int VerticalBtn_Index;
 
     public List<Button> undertoolBtns;
     //public List<GameObject> tools;
-    public GameObject MapToolBtns1, MapToolBtns2, Map;
+    public GameObject MapToolBtns1, MapToolBtns2, Map, Mask;
     public Button InfoBtn, ylzSetBtn, ylzLineBtn, NoBtn, YLZOKBtn, WJYOKBtn, drawLYBtn, creatWJYbtn, drawWJYbtn;
 
     public bool canLineYLZ = false, canYLZ = false, Can_drawLY = false, canLineWJY = false;
@@ -60,11 +61,8 @@ public class MainUI : CCGui
         TopBtn3 = transform.Find("Main/Top/Buttons/Btn3").GetComponent<Button>();
         TopBtn4 = transform.Find("Main/Top/Buttons/Btn4").GetComponent<Button>();
         ExitBtn = transform.Find("Main/Top/Buttons/ExitBtn").GetComponent<Button>();
-
-        //InfoBtn.onClick.AddListener(() =>
-        //{
-        //    MsgSystem.Dispatch("showInfoWindow");
-        //});
+        MenuBtn=transform.Find("MenuBtn").GetComponent<Button>();
+      
         ylzSetBtn.onClick.AddListener(() =>
         {
             canYLZ = !canYLZ;
@@ -229,8 +227,6 @@ public class MainUI : CCGui
     {
         CameraManager.ChangeCamera(Cameras.SceneCamera, false);
 
-        transform.GetComponent<Image>().color = new Color(1, 1, 1, 0.7f);
-
         if (ActiveObj)
             ActiveObj.SetActive(false);
 
@@ -283,6 +279,9 @@ public class MainUI : CCGui
         ChangeStepMask.SetActive(false);
         if (x == 1)
         {
+            MenuBtn.gameObject.SetActive(false);
+            SetBackImage(true);
+            Mask.SetActive(false);
             Map.SetActive(false);
             MainManager.GetInstance().isInStep = false;
             GuiSystem.Close(MainManager.GetInstance().NowStepName);
@@ -293,6 +292,7 @@ public class MainUI : CCGui
 
                 undertoolBtns[0].gameObject.SetActive(false);
                 undertoolBtns[1].gameObject.SetActive(false);
+                MainManager.GetInstance().Step1Reset();
             }
 
         }
